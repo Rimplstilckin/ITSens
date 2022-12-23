@@ -7770,7 +7770,101 @@ const data = [
       "Comment": ""
     }
    ];
+
+const margin = {left: 50, right: 50, top: 40, bottom: 0};
    
+let time = [];
+let humidity = [];
+let light = [];
+let pressure1 = [];
+let pressure2 = [];
+let sound = [];
+let temperature = [];
 
+data.map((d, i) => {
+    time.push(d.Time);
+    humidity.push(d.HumidityRun1);
+    light.push(d.LightRun1);
+    pressure1.push(d.PressureRun1);
+    pressure2.push(d.PressureRun2);
+    sound.push(d.SoundRun1);
+    temperature.push(d.TemperatureRun1);
+});
 
-console.log(data);
+// console.log(time, humidity, light, pressure1, pressure2, sound, temperature);
+console.log(time);
+
+const listData = [time, humidity, light, pressure1, pressure2, sound, temperature];
+
+const height = 300;
+const width = 800;
+
+const maxTime = d3.max(time);
+// console.log(maxTime);
+
+const minHumidity = d3.min(humidity);
+const maxHumidity = d3.max(humidity);
+// console.log(minHumidity);
+// console.log(maxHumidity);
+
+const minLight = d3.min(light);
+const maxLight = d3.max(light);
+// console.log(minLight);
+// console.log(maxLight);
+
+const minPress1 = d3.min(pressure1);
+const maxPress1 = d3.max(pressure1);
+// console.log(minPress1);
+// console.log(maxPress1);
+
+const minPress2 = d3.min(pressure2);
+const maxPress2 = d3.max(pressure2);
+// console.log(minPress2);
+// console.log(maxPress2);
+
+const minSound = d3.min(sound);
+const maxSound = d3.max(sound);
+// console.log(minSound);
+// console.log(maxSound);
+
+const minTemp = d3.min(temperature);
+const maxTemp = d3.max(temperature);
+// console.log(minTemp);
+// console.log(maxTemp);
+
+const xScales = d3.scaleLinear()
+            .domain([0, maxTime])
+            .range([0, width]);
+
+let yScales = d3.scaleLinear()
+            .domain([minHumidity-1, maxHumidity+1])
+            .range([height, 0]);
+
+const xAxis = d3.axisBottom(xScales);
+let yAxis = d3.axisLeft(yScales);
+
+var svg = d3.select('body')
+                .append('svg')
+                .attr('height', '1000px')
+                .attr('width', '100%');
+
+const chartGroup = svg.append('g')
+                        .attr('transform', 'translate('+margin.left+', '+margin.top+')')
+                        .attr('class', 'charts');
+
+let line = d3.line()
+            .x((d, i)=>xScales(d))
+            .y(yScales);
+
+console.log(xScales(data[770].Time));
+
+chartGroup.append('path')
+            .attr('d', line(listData[1]));
+
+chartGroup.append('g')
+            .attr('class', 'x axis')
+            .attr('transform', 'translate(0, '+height+')')
+            .call(xAxis);
+
+chartGroup.append('g')
+            .attr('class', 'y axis').call(yAxis);
