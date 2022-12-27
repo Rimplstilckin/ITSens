@@ -22,3 +22,7 @@ g.hidden line,
 g.hidden path{
     display: none;
 }
+
+.charts{
+    margin: auto;
+}

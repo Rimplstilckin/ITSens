@@ -1,4 +1,4 @@
-const data = [
+const sensorData = [
     {
       "Time": 0,
       "HumidityRun1": 48.2,
@@ -7781,7 +7781,7 @@ let pressure2 = [];
 let sound = [];
 let temperature = [];
 
-data.map((d, i) => {
+sensorData.map((d, i) => {
     time.push(d.Time);
     humidity.push(d.HumidityRun1);
     light.push(d.LightRun1);
@@ -7792,45 +7792,45 @@ data.map((d, i) => {
 });
 
 // console.log(time, humidity, light, pressure1, pressure2, sound, temperature);
-console.log(time);
+// console.log(time);
 
 const listData = [time, humidity, light, pressure1, pressure2, sound, temperature];
 
-const height = 300;
-const width = 800;
-
-const maxTime = d3.max(time);
+const maxTime = d3.max(sensorData, (d)=>d.Time);
 // console.log(maxTime);
 
-const minHumidity = d3.min(humidity);
-const maxHumidity = d3.max(humidity);
+const minHumidity = d3.min(sensorData, (d)=>d.HumidityRun1);
+const maxHumidity = d3.max(sensorData, (d)=>d.HumidityRun1);
 // console.log(minHumidity);
 // console.log(maxHumidity);
 
-const minLight = d3.min(light);
-const maxLight = d3.max(light);
+const minLight = d3.min(sensorData, (d)=>d.LightRun1);
+const maxLight = d3.max(sensorData, (d)=>d.LightRun1);
 // console.log(minLight);
 // console.log(maxLight);
 
-const minPress1 = d3.min(pressure1);
-const maxPress1 = d3.max(pressure1);
+const minPress1 = d3.min(sensorData, (d)=>d.PressureRun1);
+const maxPress1 = d3.max(sensorData, (d)=>d.PressureRun1);
 // console.log(minPress1);
 // console.log(maxPress1);
 
-const minPress2 = d3.min(pressure2);
-const maxPress2 = d3.max(pressure2);
+const minPress2 = d3.min(sensorData, (d)=>d.PressureRun2);
+const maxPress2 = d3.max(sensorData, (d)=>d.PressureRun2);
 // console.log(minPress2);
 // console.log(maxPress2);
 
-const minSound = d3.min(sound);
-const maxSound = d3.max(sound);
+const minSound = d3.min(sensorData, (d)=>d.SoundRun1);
+const maxSound = d3.max(sensorData, (d)=>d.SoundRun1);
 // console.log(minSound);
 // console.log(maxSound);
 
-const minTemp = d3.min(temperature);
-const maxTemp = d3.max(temperature);
+const minTemp = d3.min(sensorData, (d)=>d.TemperatureRun1);
+const maxTemp = d3.max(sensorData, (d)=>d.TemperatureRun1);
 // console.log(minTemp);
 // console.log(maxTemp);
+
+const height = 400;
+const width = 900;
 
 const xScales = d3.scaleLinear()
             .domain([0, maxTime])
@@ -7839,27 +7839,25 @@ const xScales = d3.scaleLinear()
 let yScales = d3.scaleLinear()
             .domain([minHumidity-1, maxHumidity+1])
             .range([height, 0]);
-
+            
+var svg = d3.select('body')
+.append('svg')
+.attr('height', '1000px')
+.attr('width', '100%');
+            
+const chartGroup = svg.append('g')
+.attr('transform', 'translate('+margin.left+', '+margin.top+')')
+.attr('class', 'charts');
+            
+const drawLine = d3.line()
+.x((d, i)=>{return xScales(d.Time)})
+.y((d, i)=>{return yScales(d.HumidityRun1)});
+                        
+chartGroup.append('path')
+.attr('d', drawLine(sensorData));
+            
 const xAxis = d3.axisBottom(xScales);
 let yAxis = d3.axisLeft(yScales);
-
-var svg = d3.select('body')
-                .append('svg')
-                .attr('height', '1000px')
-                .attr('width', '100%');
-
-const chartGroup = svg.append('g')
-                        .attr('transform', 'translate('+margin.left+', '+margin.top+')')
-                        .attr('class', 'charts');
-
-let line = d3.line()
-            .x((d, i)=>xScales(d))
-            .y(yScales);
-
-console.log(xScales(data[770].Time));
-
-chartGroup.append('path')
-            .attr('d', line(listData[1]));
 
 chartGroup.append('g')
             .attr('class', 'x axis')
@@ -7867,4 +7865,5 @@ chartGroup.append('g')
             .call(xAxis);
 
 chartGroup.append('g')
-            .attr('class', 'y axis').call(yAxis);
+            .attr('class', 'y axis')
+            .call(yAxis);
