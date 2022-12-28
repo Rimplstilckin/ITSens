@@ -7794,7 +7794,7 @@ sensorData.map((d, i) => {
 // console.log(time, humidity, light, pressure1, pressure2, sound, temperature);
 // console.log(time);
 
-const listData = [time, humidity, light, pressure1, pressure2, sound, temperature];
+// const listData = [time, humidity, light, pressure1, pressure2, sound, temperature];
 
 const maxTime = d3.max(sensorData, (d)=>d.Time);
 // console.log(maxTime);
@@ -7846,7 +7846,7 @@ var svg = d3.select('body')
 .attr('width', '100%');
             
 const chartGroup = svg.append('g')
-.attr('transform', 'translate('+margin.left+', '+margin.top+')')
+.attr('transform', `translate(${margin.left}, ${margin.top})`)
 .attr('class', 'charts');
             
 const drawLine = d3.line()
@@ -7861,7 +7861,7 @@ let yAxis = d3.axisLeft(yScales);
 
 chartGroup.append('g')
             .attr('class', 'x axis')
-            .attr('transform', 'translate(0, '+height+')')
+            .attr('transform', `translate(0, ${height})`)
             .call(xAxis);
 
 chartGroup.append('g')
