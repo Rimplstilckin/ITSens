@@ -7840,7 +7840,7 @@ let yScales = d3.scaleLinear()
             .domain([minHumidity-1, maxHumidity+1])
             .range([height, 0]);
             
-var svg = d3.select('body')
+var svg = d3.select('#root')
 .append('svg')
 .attr('height', '1000px')
 .attr('width', '100%');

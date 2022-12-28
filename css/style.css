@@ -23,6 +23,11 @@ g.hidden path{
     display: none;
 }
 
+#root{
+    width: 1000px;
+    margin: auto;
+}
+
 .charts{
     margin: auto;
 }
