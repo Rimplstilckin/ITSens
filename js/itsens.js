@@ -7771,31 +7771,6 @@ const sensorData = [
     }
    ];
 
-const margin = {left: 50, right: 50, top: 40, bottom: 0};
-   
-let time = [];
-let humidity = [];
-let light = [];
-let pressure1 = [];
-let pressure2 = [];
-let sound = [];
-let temperature = [];
-
-sensorData.map((d, i) => {
-    time.push(d.Time);
-    humidity.push(d.HumidityRun1);
-    light.push(d.LightRun1);
-    pressure1.push(d.PressureRun1);
-    pressure2.push(d.PressureRun2);
-    sound.push(d.SoundRun1);
-    temperature.push(d.TemperatureRun1);
-});
-
-// console.log(time, humidity, light, pressure1, pressure2, sound, temperature);
-// console.log(time);
-
-// const listData = [time, humidity, light, pressure1, pressure2, sound, temperature];
-
 const maxTime = d3.max(sensorData, (d)=>d.Time);
 // console.log(maxTime);
 
@@ -7829,41 +7804,191 @@ const maxTemp = d3.max(sensorData, (d)=>d.TemperatureRun1);
 // console.log(minTemp);
 // console.log(maxTemp);
 
+const margin = {left: 50, right: 50, top: 40, bottom: 0};
+
 const height = 400;
 const width = 900;
 
 const xScales = d3.scaleLinear()
-            .domain([0, maxTime])
+            .domain([0, 1500])
             .range([0, width]);
 
-let yScales = d3.scaleLinear()
-            .domain([minHumidity-1, maxHumidity+1])
-            .range([height, 0]);
+// Vlaznost      
+
+const yScalesHumidity = d3.scaleLinear()
+                          .domain([minHumidity-1, maxHumidity+1])
+                          .range([height, 0]);
             
-var svg = d3.select('#root')
-.append('svg')
-.attr('height', '1000px')
-.attr('width', '100%');
-            
-const chartGroup = svg.append('g')
-.attr('transform', `translate(${margin.left}, ${margin.top})`)
-.attr('class', 'charts');
-            
-const drawLine = d3.line()
-.x((d, i)=>{return xScales(d.Time)})
-.y((d, i)=>{return yScales(d.HumidityRun1)});
-                        
-chartGroup.append('path')
-.attr('d', drawLine(sensorData));
+const svg = d3.select('#root')
+            .append('svg')
+            .attr('height', '500px')
+            .attr('width', '100%');
+
+const drawLineHumidity = d3.line()
+                          .x((d, i)=>{return xScales(d.Time)})
+                          .y((d, i)=>{return yScalesHumidity(d.HumidityRun1)});
+
+const chartGroupHumidity = svg.append('g')
+                              .attr('transform', `translate(${margin.left}, ${margin.top})`)
+                              .attr('class', 'charts humidity');
+
+chartGroupHumidity.append('path')
+                  .attr('class', 'humidity')
+                  .attr('d', drawLineHumidity(sensorData));
             
 const xAxis = d3.axisBottom(xScales);
-let yAxis = d3.axisLeft(yScales);
 
-chartGroup.append('g')
-            .attr('class', 'x axis')
-            .attr('transform', `translate(0, ${height})`)
-            .call(xAxis);
+const yAxisHumidity = d3.axisLeft(yScalesHumidity);
 
-chartGroup.append('g')
-            .attr('class', 'y axis')
-            .call(yAxis);
+chartGroupHumidity.append('g')
+                  .attr('class', 'x axis')
+                  .attr('transform', `translate(0, ${height})`)
+                  .call(xAxis);
+
+chartGroupHumidity.append('g')
+                  .attr('class', 'y axis')
+                  .call(yAxisHumidity);
+
+// Svetlost
+
+const yScalesLight = d3.scaleLinear()
+                    .domain([0, 400])
+                    .range([height, 0]);
+
+const svgLight = d3.select('#root')
+                  .append('svg')
+                  .attr('height', '500px')
+                  .attr('width', '100%');
+                    
+const drawLineLight = d3.line()
+                        .x((d, i)=>{return xScales(d.Time)})
+                        .y((d, i)=>{return yScalesLight(d.LightRun1)});
+                    
+const chartGroupLight = svgLight.append('g')
+                                .attr('transform', `translate(${margin.left}, ${margin.top})`)
+                                .attr('class', 'charts light');
+                    
+chartGroupLight.append('path')
+              .attr('class', 'light')
+              .attr('d', drawLineLight(sensorData));
+                                
+const yAxisLight = d3.axisLeft(yScalesLight);
+                    
+chartGroupLight.append('g')
+              .attr('class', 'x axis')
+              .attr('transform', `translate(0, ${height})`)
+              .call(xAxis);
+
+chartGroupLight.append('g')
+              .attr('class', 'y axis')
+              .call(yAxisLight);
+
+// Pritisak 1 i 2
+
+const yScalesPressure = d3.scaleLinear()
+                          .domain([96, 102])
+                          .range([height, 0]);
+
+const svgPressure = d3.select('#root')
+                      .append('svg')
+                      .attr('height', '500px')
+                      .attr('width', '100%');
+                    
+const drawLinePressure = d3.line()
+                          .x((d, i)=>{return xScales(d.Time)})
+                          .y((d, i)=>{return yScalesPressure(d.PressureRun1)});
+
+const drawLinePressure2 = d3.line()
+                          .x((d, i)=>{return xScales(d.Time)})
+                          .y((d, i)=>{return yScalesPressure(d.PressureRun2)});
+                    
+const chartGroupPressure = svgPressure.append('g')
+                                      .attr('transform', `translate(${margin.left}, ${margin.top})`)
+                                      .attr('class', 'charts pressure');
+                    
+chartGroupPressure.append('path')
+                  .attr('class', 'pressure1')
+                  .attr('d', drawLinePressure(sensorData));
+
+chartGroupPressure.append('path')
+                  .attr('class', 'pressure2')
+                  .attr('d', drawLinePressure2(sensorData));                  
+                                
+const yAxisPressure = d3.axisLeft(yScalesPressure);
+                    
+chartGroupPressure.append('g')
+                  .attr('class', 'x axis')
+                  .attr('transform', `translate(0, ${height})`)
+                  .call(xAxis);
+
+chartGroupPressure.append('g')
+                  .attr('class', 'y axis')
+                  .call(yAxisPressure);
+
+// Zvuk                  
+
+const yScalesSound = d3.scaleLinear()
+                      .domain([35, 100])
+                      .range([height, 0]);
+
+const svgSound = d3.select('#root')
+                  .append('svg')
+                  .attr('height', '500px')
+                  .attr('width', '100%');
+                    
+const drawLineSound = d3.line()
+                        .x((d, i)=>{return xScales(d.Time)})
+                        .y((d, i)=>{return yScalesSound(d.SoundRun1)});
+                    
+const chartGroupSound = svgSound.append('g')
+                                .attr('transform', `translate(${margin.left}, ${margin.top})`)
+                                .attr('class', 'charts sound');
+                    
+chartGroupSound.append('path')
+              .attr('class', 'sound')
+              .attr('d', drawLineSound(sensorData));                
+                                
+const yAxisSound = d3.axisLeft(yScalesSound);
+                    
+chartGroupSound.append('g')
+              .attr('class', 'x axis')
+              .attr('transform', `translate(0, ${height})`)
+              .call(xAxis);
+
+chartGroupSound.append('g')
+              .attr('class', 'y axis')
+              .call(yAxisSound);
+
+// Temperatura
+
+const yScalesTemp = d3.scaleLinear()
+                      .domain([17, 22])
+                      .range([height, 0]);
+
+const svgTemp = d3.select('#root')
+                  .append('svg')
+                  .attr('height', '500px')
+                  .attr('width', '100%');
+                    
+const drawLineTemp = d3.line()
+                      .x((d, i)=>{return xScales(d.Time)})
+                      .y((d, i)=>{return yScalesTemp(d.TemperatureRun1)});
+
+const chartGroupTemp = svgTemp.append('g')
+                              .attr('transform', `translate(${margin.left}, ${margin.top})`)
+                              .attr('class', 'charts temperature');
+                    
+chartGroupTemp.append('path')
+              .attr('class', 'temperature')
+              .attr('d', drawLineTemp(sensorData));                
+                                
+const yAxisTemp = d3.axisLeft(yScalesTemp);
+                  
+chartGroupTemp.append('g')
+              .attr('class', 'x axis')
+              .attr('transform', `translate(0, ${height})`)
+              .call(xAxis);
+
+chartGroupTemp.append('g')
+              .attr('class', 'y axis')
+              .call(yAxisTemp);
