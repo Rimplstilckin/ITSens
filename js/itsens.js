@@ -7825,12 +7825,12 @@ const svg = d3.select('#root')
             .attr('width', '100%');
 
 const drawLineHumidity = d3.line()
-                          .x((d, i)=>{return xScales(d.Time)})
-                          .y((d, i)=>{return yScalesHumidity(d.HumidityRun1)});
+                          .x((d)=>{return xScales(d.Time)})
+                          .y((d)=>{return yScalesHumidity(d.HumidityRun1)});
 
 const chartGroupHumidity = svg.append('g')
                               .attr('transform', `translate(${margin.left}, ${margin.top})`)
-                              .attr('class', 'charts humidity');
+                              .attr('class', 'charts humidityChart');
 
 chartGroupHumidity.append('path')
                   .attr('class', 'humidity')
@@ -7861,12 +7861,12 @@ const svgLight = d3.select('#root')
                   .attr('width', '100%');
                     
 const drawLineLight = d3.line()
-                        .x((d, i)=>{return xScales(d.Time)})
-                        .y((d, i)=>{return yScalesLight(d.LightRun1)});
+                        .x((d)=>{return xScales(d.Time)})
+                        .y((d)=>{return yScalesLight(d.LightRun1)});
                     
 const chartGroupLight = svgLight.append('g')
                                 .attr('transform', `translate(${margin.left}, ${margin.top})`)
-                                .attr('class', 'charts light');
+                                .attr('class', 'charts lightChart');
                     
 chartGroupLight.append('path')
               .attr('class', 'light')
@@ -7895,16 +7895,16 @@ const svgPressure = d3.select('#root')
                       .attr('width', '100%');
                     
 const drawLinePressure = d3.line()
-                          .x((d, i)=>{return xScales(d.Time)})
-                          .y((d, i)=>{return yScalesPressure(d.PressureRun1)});
+                          .x((d)=>{return xScales(d.Time)})
+                          .y((d)=>{return yScalesPressure(d.PressureRun1)});
 
 const drawLinePressure2 = d3.line()
-                          .x((d, i)=>{return xScales(d.Time)})
-                          .y((d, i)=>{return yScalesPressure(d.PressureRun2)});
+                          .x((d)=>{return xScales(d.Time)})
+                          .y((d)=>{return yScalesPressure(d.PressureRun2)});
                     
 const chartGroupPressure = svgPressure.append('g')
                                       .attr('transform', `translate(${margin.left}, ${margin.top})`)
-                                      .attr('class', 'charts pressure');
+                                      .attr('class', 'charts pressureChart');
                     
 chartGroupPressure.append('path')
                   .attr('class', 'pressure1')
@@ -7937,12 +7937,12 @@ const svgSound = d3.select('#root')
                   .attr('width', '100%');
                     
 const drawLineSound = d3.line()
-                        .x((d, i)=>{return xScales(d.Time)})
-                        .y((d, i)=>{return yScalesSound(d.SoundRun1)});
+                        .x((d)=>{return xScales(d.Time)})
+                        .y((d)=>{return yScalesSound(d.SoundRun1)});
                     
 const chartGroupSound = svgSound.append('g')
                                 .attr('transform', `translate(${margin.left}, ${margin.top})`)
-                                .attr('class', 'charts sound');
+                                .attr('class', 'charts soundChart');
                     
 chartGroupSound.append('path')
               .attr('class', 'sound')
@@ -7971,12 +7971,12 @@ const svgTemp = d3.select('#root')
                   .attr('width', '100%');
                     
 const drawLineTemp = d3.line()
-                      .x((d, i)=>{return xScales(d.Time)})
-                      .y((d, i)=>{return yScalesTemp(d.TemperatureRun1)});
+                      .x((d)=>{return xScales(d.Time)})
+                      .y((d)=>{return yScalesTemp(d.TemperatureRun1)});
 
 const chartGroupTemp = svgTemp.append('g')
                               .attr('transform', `translate(${margin.left}, ${margin.top})`)
-                              .attr('class', 'charts temperature');
+                              .attr('class', 'charts temperatureChart');
                     
 chartGroupTemp.append('path')
               .attr('class', 'temperature')

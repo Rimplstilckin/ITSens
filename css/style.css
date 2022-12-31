@@ -28,6 +28,23 @@ g.hidden path{
     margin: auto;
 }
 
-.charts{
-    margin: auto;
+.axis .domain{
+    stroke: #000;
+}
+
+.tick text{
+    stroke: none;
+    fill: black;
+}
+
+.tick, .tick line{
+    stroke: #000;
+}
+
+.humidity{
+    stroke: #f00;
+}
+
+.light{
+    
 }
