@@ -46,5 +46,20 @@ g.hidden path{
 }
 
 .light{
-    
+    stroke: rgb(57, 105, 2);
+}
+
+.pressure1{
+    stroke: rgb(0, 238, 255);
+}
+
+.pressure2{
+    stroke: rgb(0, 26, 255);
+}
+.sound{
+    stroke: rgb(255, 136, 0);
+}
+
+.temperature{
+    stroke: rgb(242, 0, 255);
 }

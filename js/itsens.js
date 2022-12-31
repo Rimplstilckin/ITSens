@@ -7809,6 +7809,34 @@ const margin = {left: 50, right: 50, top: 40, bottom: 0};
 const height = 400;
 const width = 900;
 
+const svgHeight = '500px';
+const svgWidth = '100%';
+
+const texts = {
+  x: width/2,
+  y: '20px',
+  humidity : {
+    class: 'humidity',
+    text: 'Vlažnost vazduha'
+  },
+  light : {
+    class:  'light',
+    text: 'Svetlost'
+  },
+  pressure1 : {
+    class: 'pressure',
+    text: 'Vazdušni pritisak 1'
+  },
+  sound : {
+    class: 'sound',
+    text: 'Zvuk'
+  },
+  temperature : {
+    class: 'Temperatura',
+    text: 'temperature'
+  }
+};
+
 const xScales = d3.scaleLinear()
             .domain([0, 1500])
             .range([0, width]);
@@ -7816,26 +7844,32 @@ const xScales = d3.scaleLinear()
 // Vlaznost      
 
 const yScalesHumidity = d3.scaleLinear()
-                          .domain([minHumidity-1, maxHumidity+1])
+                          .domain([46, 56])
                           .range([height, 0]);
             
-const svg = d3.select('#root')
+const svgHumidity = d3.select('#root')
             .append('svg')
-            .attr('height', '500px')
-            .attr('width', '100%');
+            .attr('height', `${svgHeight}`)
+            .attr('width', `${svgWidth}`);
 
 const drawLineHumidity = d3.line()
                           .x((d)=>{return xScales(d.Time)})
                           .y((d)=>{return yScalesHumidity(d.HumidityRun1)});
 
-const chartGroupHumidity = svg.append('g')
+const humidityChartTextGroup = svgHumidity.append('text')
+                                    .attr('class', `${texts.humidity.class}`)
+                                    .attr('x', `${texts.x}`)
+                                    .attr('y', `${texts.y}`)
+                                    .text(`${texts.humidity.text}`)
+
+const chartGroupHumidity = svgHumidity.append('g')
                               .attr('transform', `translate(${margin.left}, ${margin.top})`)
                               .attr('class', 'charts humidityChart');
 
 chartGroupHumidity.append('path')
                   .attr('class', 'humidity')
                   .attr('d', drawLineHumidity(sensorData));
-            
+
 const xAxis = d3.axisBottom(xScales);
 
 const yAxisHumidity = d3.axisLeft(yScalesHumidity);
@@ -7857,8 +7891,8 @@ const yScalesLight = d3.scaleLinear()
 
 const svgLight = d3.select('#root')
                   .append('svg')
-                  .attr('height', '500px')
-                  .attr('width', '100%');
+                  .attr('height', `${svgHeight}`)
+                  .attr('width', `${svgWidth}`);
                     
 const drawLineLight = d3.line()
                         .x((d)=>{return xScales(d.Time)})
@@ -7891,8 +7925,8 @@ const yScalesPressure = d3.scaleLinear()
 
 const svgPressure = d3.select('#root')
                       .append('svg')
-                      .attr('height', '500px')
-                      .attr('width', '100%');
+                      .attr('height', `${svgHeight}`)
+                      .attr('width', `${svgWidth}`);
                     
 const drawLinePressure = d3.line()
                           .x((d)=>{return xScales(d.Time)})
@@ -7933,8 +7967,8 @@ const yScalesSound = d3.scaleLinear()
 
 const svgSound = d3.select('#root')
                   .append('svg')
-                  .attr('height', '500px')
-                  .attr('width', '100%');
+                  .attr('height', `${svgHeight}`)
+                  .attr('width', `${svgWidth}`);
                     
 const drawLineSound = d3.line()
                         .x((d)=>{return xScales(d.Time)})
@@ -7967,8 +8001,8 @@ const yScalesTemp = d3.scaleLinear()
 
 const svgTemp = d3.select('#root')
                   .append('svg')
-                  .attr('height', '500px')
-                  .attr('width', '100%');
+                  .attr('height', `${svgHeight}`)
+                  .attr('width', `${svgWidth}`);
                     
 const drawLineTemp = d3.line()
                       .x((d)=>{return xScales(d.Time)})
