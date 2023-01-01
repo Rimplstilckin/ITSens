@@ -7804,36 +7804,37 @@ const maxTemp = d3.max(sensorData, (d)=>d.TemperatureRun1);
 // console.log(minTemp);
 // console.log(maxTemp);
 
-const margin = {left: 50, right: 50, top: 40, bottom: 0};
+const margin = {left: 50, right: 50, top: 100, bottom: 0};
 
 const height = 400;
 const width = 900;
 
-const svgHeight = '500px';
+const svgHeight = '600px';
 const svgWidth = '100%';
 
 const texts = {
   x: width/2,
-  y: '20px',
+  y: '50px',
+  anchor: 'middle',
   humidity : {
-    class: 'humidity',
+    class: 'humidityTxt chartTxt',
     text: 'Vlažnost vazduha'
   },
   light : {
-    class:  'light',
-    text: 'Svetlost'
+    class:  'lightTxt chartTxt',
+    text: 'Osvetljenje'
   },
-  pressure1 : {
-    class: 'pressure',
-    text: 'Vazdušni pritisak 1'
+  pressure : {
+    class: 'pressureTxt chartTxt',
+    text: 'Vazdušni pritisak 1 i 2'
   },
   sound : {
-    class: 'sound',
+    class: 'soundTxt chartTxt',
     text: 'Zvuk'
   },
   temperature : {
-    class: 'Temperatura',
-    text: 'temperature'
+    class: 'temperatureTxt chartTxt',
+    text: 'Temperatura'
   }
 };
 
@@ -7848,23 +7849,23 @@ const yScalesHumidity = d3.scaleLinear()
                           .range([height, 0]);
             
 const svgHumidity = d3.select('#root')
-            .append('svg')
-            .attr('height', `${svgHeight}`)
-            .attr('width', `${svgWidth}`);
+                      .append('svg')
+                      .attr('height', `${svgHeight}`)
+                      .attr('width', `${svgWidth}`);
 
 const drawLineHumidity = d3.line()
                           .x((d)=>{return xScales(d.Time)})
                           .y((d)=>{return yScalesHumidity(d.HumidityRun1)});
 
-const humidityChartTextGroup = svgHumidity.append('text')
-                                    .attr('class', `${texts.humidity.class}`)
-                                    .attr('x', `${texts.x}`)
-                                    .attr('y', `${texts.y}`)
-                                    .text(`${texts.humidity.text}`)
+svgHumidity.append('text')
+          .attr('class', `${texts.humidity.class}`)
+          .attr('x', `${texts.x}`)
+          .attr('y', `${texts.y}`)
+          .text(`${texts.humidity.text}`);
 
 const chartGroupHumidity = svgHumidity.append('g')
-                              .attr('transform', `translate(${margin.left}, ${margin.top})`)
-                              .attr('class', 'charts humidityChart');
+                                      .attr('transform', `translate(${margin.left}, ${margin.top})`)
+                                      .attr('class', 'charts humidityChart');
 
 chartGroupHumidity.append('path')
                   .attr('class', 'humidity')
@@ -7886,8 +7887,8 @@ chartGroupHumidity.append('g')
 // Svetlost
 
 const yScalesLight = d3.scaleLinear()
-                    .domain([0, 400])
-                    .range([height, 0]);
+                      .domain([0, 400])
+                      .range([height, 0]);
 
 const svgLight = d3.select('#root')
                   .append('svg')
@@ -7897,6 +7898,13 @@ const svgLight = d3.select('#root')
 const drawLineLight = d3.line()
                         .x((d)=>{return xScales(d.Time)})
                         .y((d)=>{return yScalesLight(d.LightRun1)});
+
+
+svgLight.append('text')
+        .attr('class', `${texts.light.class}`)
+        .attr('x', `${texts.x}`)
+        .attr('y', `${texts.y}`)
+        .text(`${texts.light.text}`);
                     
 const chartGroupLight = svgLight.append('g')
                                 .attr('transform', `translate(${margin.left}, ${margin.top})`)
@@ -7935,6 +7943,12 @@ const drawLinePressure = d3.line()
 const drawLinePressure2 = d3.line()
                           .x((d)=>{return xScales(d.Time)})
                           .y((d)=>{return yScalesPressure(d.PressureRun2)});
+
+svgPressure.append('text')
+          .attr('class', `${texts.pressure.class}`)
+          .attr('x', `${texts.x}`)
+          .attr('y', `${texts.y}`)
+          .text(`${texts.pressure.text}`);
                     
 const chartGroupPressure = svgPressure.append('g')
                                       .attr('transform', `translate(${margin.left}, ${margin.top})`)
@@ -7973,6 +7987,12 @@ const svgSound = d3.select('#root')
 const drawLineSound = d3.line()
                         .x((d)=>{return xScales(d.Time)})
                         .y((d)=>{return yScalesSound(d.SoundRun1)});
+
+svgSound.append('text')
+          .attr('class', `${texts.sound.class}`)
+          .attr('x', `${texts.x}`)
+          .attr('y', `${texts.y}`)
+          .text(`${texts.sound.text}`);                        
                     
 const chartGroupSound = svgSound.append('g')
                                 .attr('transform', `translate(${margin.left}, ${margin.top})`)
@@ -8007,6 +8027,12 @@ const svgTemp = d3.select('#root')
 const drawLineTemp = d3.line()
                       .x((d)=>{return xScales(d.Time)})
                       .y((d)=>{return yScalesTemp(d.TemperatureRun1)});
+
+svgTemp.append('text')
+      .attr('class', `${texts.temperature.class}`)
+      .attr('x', `${texts.x}`)
+      .attr('y', `${texts.y}`)
+      .text(`${texts.temperature.text}`);                      
 
 const chartGroupTemp = svgTemp.append('g')
                               .attr('transform', `translate(${margin.left}, ${margin.top})`)

@@ -41,25 +41,55 @@ g.hidden path{
     stroke: #000;
 }
 
+/* Graphs text */
+
+text.chartTxt{
+    text-anchor: middle;
+    font-size: 40px;
+    stroke: none;
+}
+
+.humidityTxt{
+    fill: #f00;
+}
+
+.lightTxt{
+    fill: #396902
+}
+
+.pressureTxt{
+    fill:#001aff
+}
+
+.soundTxt{
+    fill: #ff8800
+}
+
+.temperatureTxt{
+    fill: #f200ff
+}
+
+/* Graphs color */
+
 .humidity{
     stroke: #f00;
 }
 
 .light{
-    stroke: rgb(57, 105, 2);
+    stroke: #396902;
 }
 
 .pressure1{
-    stroke: rgb(0, 238, 255);
+    stroke: #00eeff;
 }
 
 .pressure2{
-    stroke: rgb(0, 26, 255);
+    stroke: #001aff;
 }
 .sound{
-    stroke: rgb(255, 136, 0);
+    stroke: #ff8800;
 }
 
 .temperature{
-    stroke: rgb(242, 0, 255);
+    stroke: #f200ff;
 }
