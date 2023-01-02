@@ -7812,6 +7812,10 @@ const width = 900;
 const svgHeight = '600px';
 const svgWidth = '100%';
 
+const circle = {
+  radius : 5
+}
+
 const texts = {
   x: width/2,
   y: '50px',
@@ -7854,8 +7858,16 @@ const svgHumidity = d3.select('#root')
                       .attr('width', `${svgWidth}`);
 
 const drawLineHumidity = d3.line()
-                          .x((d)=>{return xScales(d.Time)})
-                          .y((d)=>{return yScalesHumidity(d.HumidityRun1)});
+                          .x((d)=> xScales(d.Time))
+                          .y((d)=>yScalesHumidity(d.HumidityRun1));
+
+svgHumidity.selectAll('circle')
+          .data(sensorData)
+          .enter()
+          .append('circle')
+          .attr('cx', (d)=>xScales(d.Time)+50)
+          .attr('cy', 40)
+          .attr('r', 0.5);
 
 svgHumidity.append('text')
           .attr('class', `${texts.humidity.class}`)
