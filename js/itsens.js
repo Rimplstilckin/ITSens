@@ -7813,7 +7813,7 @@ const svgHeight = '600px';
 const svgWidth = '100%';
 
 const circle = {
-  radius : 5
+  radius : 3
 }
 
 const texts = {
@@ -7846,7 +7846,7 @@ const xScales = d3.scaleLinear()
             .domain([0, 1500])
             .range([0, width]);
 
-// Vlaznost      
+// Vlaznost vazduha
 
 const yScalesHumidity = d3.scaleLinear()
                           .domain([46, 56])
@@ -7861,13 +7861,16 @@ const drawLineHumidity = d3.line()
                           .x((d)=> xScales(d.Time))
                           .y((d)=>yScalesHumidity(d.HumidityRun1));
 
+    // Tačke
+
 svgHumidity.selectAll('circle')
           .data(sensorData)
           .enter()
-          .append('circle')
-          .attr('cx', (d)=>xScales(d.Time)+50)
-          .attr('cy', 40)
-          .attr('r', 0.5);
+          .append('circle').attr('transform', `translate(${margin.left}, ${margin.top})`)
+          .attr('cx', (d)=>xScales(d.Time))
+          .attr('cy', (d)=>yScalesHumidity(d.HumidityRun1))
+          .attr('r', `${circle.radius}`)
+          .attr('title', (d)=>d.HumidityRun1 + ' ' + d.Time);
 
 svgHumidity.append('text')
           .attr('class', `${texts.humidity.class}`)
@@ -8064,3 +8067,5 @@ chartGroupTemp.append('g')
 chartGroupTemp.append('g')
               .attr('class', 'y axis')
               .call(yAxisTemp);
+
+$('circle').hover(()=> console.log('ds'));
