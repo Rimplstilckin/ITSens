@@ -69,6 +69,17 @@ text.chartTxt{
     fill: #f200ff
 }
 
+#root{
+    position: relative;
+}
+
+#hoverText{
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    background-color: red;
+}
+
 /* Graphs color */
 
 .humidity{

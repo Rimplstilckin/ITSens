@@ -7771,6 +7771,8 @@ const sensorData = [
     }
    ];
 
+
+   
 const maxTime = d3.max(sensorData, (d)=>d.Time);
 // console.log(maxTime);
 
@@ -7813,7 +7815,7 @@ const svgHeight = '600px';
 const svgWidth = '100%';
 
 const circle = {
-  radius : 3
+  radius : 4
 }
 
 const texts = {
@@ -7855,22 +7857,26 @@ const yScalesHumidity = d3.scaleLinear()
 const svgHumidity = d3.select('#root')
                       .append('svg')
                       .attr('height', `${svgHeight}`)
-                      .attr('width', `${svgWidth}`);
+                      .attr('width', `${svgWidth}`)
+                      .attr('id', 'humidity');
 
 const drawLineHumidity = d3.line()
                           .x((d)=> xScales(d.Time))
                           .y((d)=>yScalesHumidity(d.HumidityRun1));
 
-    // Tačke
+    // Points
 
 svgHumidity.selectAll('circle')
           .data(sensorData)
           .enter()
-          .append('circle').attr('transform', `translate(${margin.left}, ${margin.top})`)
+          .append('circle')
+          .attr('transform', `translate(${margin.left}, ${margin.top})`)
           .attr('cx', (d)=>xScales(d.Time))
           .attr('cy', (d)=>yScalesHumidity(d.HumidityRun1))
           .attr('r', `${circle.radius}`)
           .attr('title', (d)=>d.HumidityRun1 + ' ' + d.Time);
+
+    // Points
 
 svgHumidity.append('text')
           .attr('class', `${texts.humidity.class}`)
@@ -7913,7 +7919,20 @@ const svgLight = d3.select('#root')
 const drawLineLight = d3.line()
                         .x((d)=>{return xScales(d.Time)})
                         .y((d)=>{return yScalesLight(d.LightRun1)});
+                        
+          // Points
 
+svgLight.selectAll('circle')
+        .data(sensorData)
+        .enter()
+        .append('circle')
+        .attr('transform', `translate(${margin.left}, ${margin.top})`)
+        .attr('cx', (d)=>xScales(d.Time))
+        .attr('cy', (d)=>yScalesLight(d.LightRun1))
+        .attr('r', `${circle.radius}`)
+        .attr('title', (d)=>d.LightRun1 + ' ' + d.Time);                        
+
+          // Points
 
 svgLight.append('text')
         .attr('class', `${texts.light.class}`)
@@ -8003,6 +8022,20 @@ const drawLineSound = d3.line()
                         .x((d)=>{return xScales(d.Time)})
                         .y((d)=>{return yScalesSound(d.SoundRun1)});
 
+// Points
+
+svgSound.selectAll('circle')
+.data(sensorData)
+.enter()
+.append('circle')
+.attr('transform', `translate(${margin.left}, ${margin.top})`)
+.attr('cx', (d)=>xScales(d.Time))
+.attr('cy', (d)=>yScalesSound(d.SoundRun1))
+.attr('r', `${circle.radius}`)
+.attr('title', (d)=>d.SoundRun1 + ' ' + d.Time);                        
+
+  // Points
+
 svgSound.append('text')
           .attr('class', `${texts.sound.class}`)
           .attr('x', `${texts.x}`)
@@ -8043,6 +8076,20 @@ const drawLineTemp = d3.line()
                       .x((d)=>{return xScales(d.Time)})
                       .y((d)=>{return yScalesTemp(d.TemperatureRun1)});
 
+// Points
+
+svgTemp.selectAll('circle')
+        .data(sensorData)
+        .enter()
+        .append('circle')
+        .attr('transform', `translate(${margin.left}, ${margin.top})`)
+        .attr('cx', (d)=>xScales(d.Time))
+        .attr('cy', (d)=>yScalesTemp(d.TemperatureRun1))
+        .attr('r', `${circle.radius}`)
+        .attr('title', (d)=>d.TemperatureRun1 + ' ' + d.Time);                        
+
+  // Points                      
+
 svgTemp.append('text')
       .attr('class', `${texts.temperature.class}`)
       .attr('x', `${texts.x}`)
@@ -8068,4 +8115,42 @@ chartGroupTemp.append('g')
               .attr('class', 'y axis')
               .call(yAxisTemp);
 
-$('circle').hover(()=> console.log('ds'));
+$(document).ready(function(){
+  $("circle").hover(function(event){
+
+    let margin = $('#root').css('margin-left');
+    
+
+    let hoverX = event.clientX;
+    let hoverY = 0;
+
+    console.log(hoverX);
+
+    const hoverTxt = d3.select('#root')
+                        .append('div')
+                        .attr('id', 'hoverText');
+
+    $('#hoverText').css('background-color', 'blue')
+                  .css('left', hoverX)
+                  .css('top', hoverY);
+
+    // .attr('transform', `translate(0, 0})`)
+    // svgHumidity.append('text')
+    //                   .attr('id', 'hoverText')
+    //                   .attr('transform', `translate(${hoverX}, ${hoverY})`)
+    //                   .text('das');
+
+    // console.log(param.clientY);
+
+    // $(this).before('<span id="hoverText">dsasdas</span>')
+    // let pointTitle = $(this).attr('title');
+    // let top = param.clientY+10;
+    // let left = param.clientX+10;
+    // $('#hoverText').css('top', '30px').css('left', '50px').text(pointTitle).show();
+    // console.log('x: ', hoverX, 'y: ', hoverY);
+    }, 
+    function(){
+      $('#hoverText').remove();
+      // console.log("nesto");
+  });
+});
