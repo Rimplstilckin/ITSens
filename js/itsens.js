@@ -7815,7 +7815,7 @@ const svgHeight = '600px';
 const svgWidth = '100%';
 
 const circle = {
-  radius : 4
+  radius : 3
 }
 
 const texts = {
@@ -7824,23 +7824,28 @@ const texts = {
   anchor: 'middle',
   humidity : {
     class: 'humidityTxt chartTxt',
-    text: 'Vlažnost vazduha'
+    text: 'Vlažnost vazduha',
+    unit: '%RH'
   },
   light : {
     class:  'lightTxt chartTxt',
-    text: 'Osvetljenje'
+    text: 'Osvetljenje',
+    unit: 'lx'
   },
   pressure : {
     class: 'pressureTxt chartTxt',
-    text: 'Vazdušni pritisak 1 i 2'
+    text: 'Vazdušni pritisak 1 i 2',
+    unit: 'kPa'
   },
   sound : {
     class: 'soundTxt chartTxt',
-    text: 'Zvuk'
+    text: 'Zvuk',
+    unit: 'dBA'
   },
   temperature : {
     class: 'temperatureTxt chartTxt',
-    text: 'Temperatura'
+    text: 'Temperatura',
+    unit: '°C'
   }
 };
 
@@ -7863,20 +7868,6 @@ const svgHumidity = d3.select('#root')
 const drawLineHumidity = d3.line()
                           .x((d)=> xScales(d.Time))
                           .y((d)=>yScalesHumidity(d.HumidityRun1));
-
-    // Points
-
-svgHumidity.selectAll('circle')
-          .data(sensorData)
-          .enter()
-          .append('circle')
-          .attr('transform', `translate(${margin.left}, ${margin.top})`)
-          .attr('cx', (d)=>xScales(d.Time))
-          .attr('cy', (d)=>yScalesHumidity(d.HumidityRun1))
-          .attr('r', `${circle.radius}`)
-          .attr('title', (d)=>d.HumidityRun1 + ' ' + d.Time);
-
-    // Points
 
 svgHumidity.append('text')
           .attr('class', `${texts.humidity.class}`)
@@ -7905,6 +7896,20 @@ chartGroupHumidity.append('g')
                   .attr('class', 'y axis')
                   .call(yAxisHumidity);
 
+    // Points
+
+svgHumidity.selectAll('circle')
+          .data(sensorData)
+          .enter()
+          .append('circle')
+          .attr('transform', `translate(${margin.left}, ${margin.top})`)
+          .attr('cx', (d)=>xScales(d.Time))
+          .attr('cy', (d)=>yScalesHumidity(d.HumidityRun1))
+          .attr('r', `${circle.radius}`)
+          .attr('title', (d)=>d.HumidityRun1 + ' ' + d.Time);
+
+    // Points                  
+
 // Svetlost
 
 const yScalesLight = d3.scaleLinear()
@@ -7914,26 +7919,13 @@ const yScalesLight = d3.scaleLinear()
 const svgLight = d3.select('#root')
                   .append('svg')
                   .attr('height', `${svgHeight}`)
-                  .attr('width', `${svgWidth}`);
+                  .attr('width', `${svgWidth}`)
+                  .attr('id', 'light');
                     
 const drawLineLight = d3.line()
                         .x((d)=>{return xScales(d.Time)})
                         .y((d)=>{return yScalesLight(d.LightRun1)});
                         
-          // Points
-
-svgLight.selectAll('circle')
-        .data(sensorData)
-        .enter()
-        .append('circle')
-        .attr('transform', `translate(${margin.left}, ${margin.top})`)
-        .attr('cx', (d)=>xScales(d.Time))
-        .attr('cy', (d)=>yScalesLight(d.LightRun1))
-        .attr('r', `${circle.radius}`)
-        .attr('title', (d)=>d.LightRun1 + ' ' + d.Time);                        
-
-          // Points
-
 svgLight.append('text')
         .attr('class', `${texts.light.class}`)
         .attr('x', `${texts.x}`)
@@ -7959,6 +7951,20 @@ chartGroupLight.append('g')
               .attr('class', 'y axis')
               .call(yAxisLight);
 
+    // Points
+
+svgLight.selectAll('circle')
+        .data(sensorData)
+        .enter()
+        .append('circle')
+        .attr('transform', `translate(${margin.left}, ${margin.top})`)
+        .attr('cx', (d)=>xScales(d.Time))
+        .attr('cy', (d)=>yScalesLight(d.LightRun1))
+        .attr('r', `${circle.radius}`)
+        .attr('title', (d)=>d.LightRun1 + ' ' + d.Time);                        
+
+      // Points              
+
 // Pritisak 1 i 2
 
 const yScalesPressure = d3.scaleLinear()
@@ -7968,7 +7974,8 @@ const yScalesPressure = d3.scaleLinear()
 const svgPressure = d3.select('#root')
                       .append('svg')
                       .attr('height', `${svgHeight}`)
-                      .attr('width', `${svgWidth}`);
+                      .attr('width', `${svgWidth}`)
+                      .attr('id', 'pressure');;
                     
 const drawLinePressure = d3.line()
                           .x((d)=>{return xScales(d.Time)})
@@ -8007,6 +8014,20 @@ chartGroupPressure.append('g')
                   .attr('class', 'y axis')
                   .call(yAxisPressure);
 
+    // Points
+
+svgPressure.selectAll('circle')
+          .data(sensorData)
+          .enter()
+          .append('circle')
+          .attr('transform', `translate(${margin.left}, ${margin.top})`)
+          .attr('cx', (d)=>xScales(d.Time))
+          .attr('cy', (d)=>yScalesPressure(d.PressureRun1))
+          .attr('r', `${circle.radius}`)
+          .attr('title', (d)=>d.PressureRun1 + ' ' + d.Time);  
+
+    // Points                      
+
 // Zvuk                  
 
 const yScalesSound = d3.scaleLinear()
@@ -8016,25 +8037,12 @@ const yScalesSound = d3.scaleLinear()
 const svgSound = d3.select('#root')
                   .append('svg')
                   .attr('height', `${svgHeight}`)
-                  .attr('width', `${svgWidth}`);
+                  .attr('width', `${svgWidth}`)
+                  .attr('id', 'sound');
                     
 const drawLineSound = d3.line()
                         .x((d)=>{return xScales(d.Time)})
                         .y((d)=>{return yScalesSound(d.SoundRun1)});
-
-// Points
-
-svgSound.selectAll('circle')
-.data(sensorData)
-.enter()
-.append('circle')
-.attr('transform', `translate(${margin.left}, ${margin.top})`)
-.attr('cx', (d)=>xScales(d.Time))
-.attr('cy', (d)=>yScalesSound(d.SoundRun1))
-.attr('r', `${circle.radius}`)
-.attr('title', (d)=>d.SoundRun1 + ' ' + d.Time);                        
-
-  // Points
 
 svgSound.append('text')
           .attr('class', `${texts.sound.class}`)
@@ -8061,6 +8069,20 @@ chartGroupSound.append('g')
               .attr('class', 'y axis')
               .call(yAxisSound);
 
+    // Points
+
+svgSound.selectAll('circle')
+        .data(sensorData)
+        .enter()
+        .append('circle')
+        .attr('transform', `translate(${margin.left}, ${margin.top})`)
+        .attr('cx', (d)=>xScales(d.Time))
+        .attr('cy', (d)=>yScalesSound(d.SoundRun1))
+        .attr('r', `${circle.radius}`)
+        .attr('title', (d)=>d.SoundRun1 + ' ' + d.Time);                        
+
+    // Points              
+
 // Temperatura
 
 const yScalesTemp = d3.scaleLinear()
@@ -8070,25 +8092,12 @@ const yScalesTemp = d3.scaleLinear()
 const svgTemp = d3.select('#root')
                   .append('svg')
                   .attr('height', `${svgHeight}`)
-                  .attr('width', `${svgWidth}`);
+                  .attr('width', `${svgWidth}`)
+                  .attr('id', 'temperature');
                     
 const drawLineTemp = d3.line()
                       .x((d)=>{return xScales(d.Time)})
                       .y((d)=>{return yScalesTemp(d.TemperatureRun1)});
-
-// Points
-
-svgTemp.selectAll('circle')
-        .data(sensorData)
-        .enter()
-        .append('circle')
-        .attr('transform', `translate(${margin.left}, ${margin.top})`)
-        .attr('cx', (d)=>xScales(d.Time))
-        .attr('cy', (d)=>yScalesTemp(d.TemperatureRun1))
-        .attr('r', `${circle.radius}`)
-        .attr('title', (d)=>d.TemperatureRun1 + ' ' + d.Time);                        
-
-  // Points                      
 
 svgTemp.append('text')
       .attr('class', `${texts.temperature.class}`)
@@ -8115,6 +8124,20 @@ chartGroupTemp.append('g')
               .attr('class', 'y axis')
               .call(yAxisTemp);
 
+    // Points
+
+svgTemp.selectAll('circle')
+        .data(sensorData)
+        .enter()
+        .append('circle')
+        .attr('transform', `translate(${margin.left}, ${margin.top})`)
+        .attr('cx', (d)=>xScales(d.Time))
+        .attr('cy', (d)=>yScalesTemp(d.TemperatureRun1))
+        .attr('r', `${circle.radius}`)
+        .attr('title', (d)=>d.TemperatureRun1 + ' ' + d.Time);                        
+
+    // Points                 
+
               // Text uz kursor
 
 $(document).ready(function(){
@@ -8129,15 +8152,11 @@ $(document).ready(function(){
 
     console.log(cicleData);
 
-    const hoverTxt = d3.select('#root')
-                        .append('div')
-                        .attr('id', 'hoverText');
-
-    $('#hoverText').css('background-color', 'blue')
+    $('#hoverText').show()
                   .css('left', hoverX)
                   .css('top', hoverY);
     }, 
     function(){
-      $('#hoverText').remove();
+      $('#hoverText').hide();
   });
 });

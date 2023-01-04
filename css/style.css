@@ -8,7 +8,7 @@ line {
 
 path {
     stroke: green;
-    stroke-width: 2px;
+    stroke-width: 3px;
     fill: none;
 }
 
@@ -74,20 +74,42 @@ text.chartTxt{
 }
 
 #hoverText{
+    display: none;
     position: absolute;
-    height: 100px;
-    width: 100px;
-    background-color: red;
+    padding: 10px;
+    background-color: #ffeabb;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #e3e3e3;
+    border-radius: 5px;
 }
 
+#hoverText p{
+    margin: 0;
+    padding: 2px;
+}
+
+
 /* Graphs color */
+
+#humidity circle{
+    fill:#f00;
+}
 
 .humidity{
     stroke: #f00;
 }
 
+#light circle{
+    fill:#396902;
+}
+
 .light{
     stroke: #396902;
+}
+
+#pressure circle{
+    fill: #00eeff;
 }
 
 .pressure1{
@@ -97,8 +119,17 @@ text.chartTxt{
 .pressure2{
     stroke: #001aff;
 }
+
+#sound circle{
+    fill: #ff8800;
+}
+
 .sound{
     stroke: #ff8800;
+}
+
+#temperature circle{
+    fill: #f200ff;
 }
 
 .temperature{
