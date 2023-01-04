@@ -8115,16 +8115,19 @@ chartGroupTemp.append('g')
               .attr('class', 'y axis')
               .call(yAxisTemp);
 
+              // Text uz kursor
+
 $(document).ready(function(){
   $("circle").hover(function(event){
 
-    let margin = $('#root').css('margin-left');
-    
+    let margin = parseInt($('#root').css('margin-left').replace('px', ''));
 
-    let hoverX = event.clientX;
-    let hoverY = 0;
+    let hoverX = event.pageX-margin;
+    let hoverY = event.pageY;
 
-    console.log(hoverX);
+    let cicleData = $(this).attr('title');
+
+    console.log(cicleData);
 
     const hoverTxt = d3.select('#root')
                         .append('div')
@@ -8133,24 +8136,8 @@ $(document).ready(function(){
     $('#hoverText').css('background-color', 'blue')
                   .css('left', hoverX)
                   .css('top', hoverY);
-
-    // .attr('transform', `translate(0, 0})`)
-    // svgHumidity.append('text')
-    //                   .attr('id', 'hoverText')
-    //                   .attr('transform', `translate(${hoverX}, ${hoverY})`)
-    //                   .text('das');
-
-    // console.log(param.clientY);
-
-    // $(this).before('<span id="hoverText">dsasdas</span>')
-    // let pointTitle = $(this).attr('title');
-    // let top = param.clientY+10;
-    // let left = param.clientX+10;
-    // $('#hoverText').css('top', '30px').css('left', '50px').text(pointTitle).show();
-    // console.log('x: ', hoverX, 'y: ', hoverY);
     }, 
     function(){
       $('#hoverText').remove();
-      // console.log("nesto");
   });
 });
