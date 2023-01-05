@@ -7821,7 +7821,18 @@ const circle = {
 const texts = {
   x: width/2,
   y: '50px',
+  unitPosition: {
+    x: '0px',
+    y: '80px'
+  },
+  timePosition: {
+    x: 940,
+    y: 530
+  },
   anchor: 'middle',
+  time: {
+    unit: 's'
+  },
   humidity : {
     class: 'humidityTxt chartTxt',
     text: 'Vlažnost vazduha',
@@ -7874,6 +7885,20 @@ svgHumidity.append('text')
           .attr('x', `${texts.x}`)
           .attr('y', `${texts.y}`)
           .text(`${texts.humidity.text}`);
+
+          // units
+
+svgHumidity.append('text')
+          .attr('x', `${texts.unitPosition.x}`)
+          .attr('y', `${texts.unitPosition.y}`)
+          .text(`${texts.humidity.unit}`);
+
+svgHumidity.append('text')
+          .attr('x', `${texts.timePosition.x}`)
+          .attr('y', `${texts.timePosition.y}`)
+          .text(`${texts.time.unit}`);          
+
+          // units
 
 const chartGroupHumidity = svgHumidity.append('g')
                                       .attr('transform', `translate(${margin.left}, ${margin.top})`)
@@ -7931,6 +7956,20 @@ svgLight.append('text')
         .attr('x', `${texts.x}`)
         .attr('y', `${texts.y}`)
         .text(`${texts.light.text}`);
+
+      // units
+
+svgLight.append('text')
+        .attr('x', `${texts.unitPosition.x}`)
+        .attr('y', `${texts.unitPosition.y}`)
+        .text(`${texts.light.unit}`);
+
+svgLight.append('text')
+        .attr('x', `${texts.timePosition.x}`)
+        .attr('y', `${texts.timePosition.y}`)
+        .text(`${texts.time.unit}`);          
+
+        // units
                     
 const chartGroupLight = svgLight.append('g')
                                 .attr('transform', `translate(${margin.left}, ${margin.top})`)
@@ -7990,6 +8029,20 @@ svgPressure.append('text')
           .attr('x', `${texts.x}`)
           .attr('y', `${texts.y}`)
           .text(`${texts.pressure.text}`);
+
+      // units
+
+svgPressure.append('text')
+          .attr('x', `${texts.unitPosition.x}`)
+          .attr('y', `${texts.unitPosition.y}`)
+          .text(`${texts.pressure.unit}`);
+
+svgPressure.append('text')
+          .attr('x', `${texts.timePosition.x}`)
+          .attr('y', `${texts.timePosition.y}`)
+          .text(`${texts.time.unit}`);          
+
+      // units          
                     
 const chartGroupPressure = svgPressure.append('g')
                                       .attr('transform', `translate(${margin.left}, ${margin.top})`)
@@ -8028,7 +8081,7 @@ svgPressure.selectAll('circle')
 
     // Points                      
 
-// Zvuk                  
+// Zvuk
 
 const yScalesSound = d3.scaleLinear()
                       .domain([35, 100])
@@ -8048,7 +8101,21 @@ svgSound.append('text')
           .attr('class', `${texts.sound.class}`)
           .attr('x', `${texts.x}`)
           .attr('y', `${texts.y}`)
-          .text(`${texts.sound.text}`);                        
+          .text(`${texts.sound.text}`);
+          
+      // units
+
+svgSound.append('text')
+        .attr('x', `${texts.unitPosition.x}`)
+        .attr('y', `${texts.unitPosition.y}`)
+        .text(`${texts.sound.unit}`);
+
+svgSound.append('text')
+        .attr('x', `${texts.timePosition.x}`)
+        .attr('y', `${texts.timePosition.y}`)
+        .text(`${texts.time.unit}`);          
+
+      // units          
                     
 const chartGroupSound = svgSound.append('g')
                                 .attr('transform', `translate(${margin.left}, ${margin.top})`)
@@ -8102,7 +8169,21 @@ svgTemp.append('text')
       .attr('class', `${texts.temperature.class}`)
       .attr('x', `${texts.x}`)
       .attr('y', `${texts.y}`)
-      .text(`${texts.temperature.text}`);                      
+      .text(`${texts.temperature.text}`);          
+      
+      // units
+
+svgTemp.append('text')
+      .attr('x', `${texts.unitPosition.x}`)
+      .attr('y', `${texts.unitPosition.y}`)
+      .text(`${texts.temperature.unit}`);
+
+svgTemp.append('text')
+      .attr('x', `${texts.timePosition.x}`)
+      .attr('y', `${texts.timePosition.y}`)
+      .text(`${texts.time.unit}`);          
+
+      // units      
 
 const chartGroupTemp = svgTemp.append('g')
                               .attr('transform', `translate(${margin.left}, ${margin.top})`)
@@ -8110,7 +8191,7 @@ const chartGroupTemp = svgTemp.append('g')
                     
 chartGroupTemp.append('path')
               .attr('class', 'temperature')
-              .attr('d', drawLineTemp(sensorData));                
+              .attr('d', drawLineTemp(sensorData));
                                 
 const yAxisTemp = d3.axisLeft(yScalesTemp);
                   
