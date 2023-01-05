@@ -7906,7 +7906,7 @@ svgHumidity.selectAll('circle')
           .attr('cx', (d)=>xScales(d.Time))
           .attr('cy', (d)=>yScalesHumidity(d.HumidityRun1))
           .attr('r', `${circle.radius}`)
-          .attr('title', (d)=>d.HumidityRun1 + ' ' + d.Time);
+          .attr('title', (d)=>d.HumidityRun1 + `${texts.humidity.unit}` +' ' + d.Time + 's');
 
     // Points                  
 
@@ -7961,7 +7961,7 @@ svgLight.selectAll('circle')
         .attr('cx', (d)=>xScales(d.Time))
         .attr('cy', (d)=>yScalesLight(d.LightRun1))
         .attr('r', `${circle.radius}`)
-        .attr('title', (d)=>d.LightRun1 + ' ' + d.Time);                        
+        .attr('title', (d)=>d.LightRun1 + `${texts.light.unit}` + ' ' + d.Time + 's');
 
       // Points              
 
@@ -8024,7 +8024,7 @@ svgPressure.selectAll('circle')
           .attr('cx', (d)=>xScales(d.Time))
           .attr('cy', (d)=>yScalesPressure(d.PressureRun1))
           .attr('r', `${circle.radius}`)
-          .attr('title', (d)=>d.PressureRun1 + ' ' + d.Time);  
+          .attr('title', (d)=>d.PressureRun1 + `${texts.pressure.unit}` + ' ' + d.Time + 's');
 
     // Points                      
 
@@ -8079,8 +8079,7 @@ svgSound.selectAll('circle')
         .attr('cx', (d)=>xScales(d.Time))
         .attr('cy', (d)=>yScalesSound(d.SoundRun1))
         .attr('r', `${circle.radius}`)
-        .attr('title', (d)=>d.SoundRun1 + ' ' + d.Time);                        
-
+        .attr('title', (d)=>d.SoundRun1 + `${texts.sound.unit}` + ' ' + d.Time + 's');
     // Points              
 
 // Temperatura
@@ -8134,7 +8133,7 @@ svgTemp.selectAll('circle')
         .attr('cx', (d)=>xScales(d.Time))
         .attr('cy', (d)=>yScalesTemp(d.TemperatureRun1))
         .attr('r', `${circle.radius}`)
-        .attr('title', (d)=>d.TemperatureRun1 + ' ' + d.Time);                        
+        .attr('title', (d)=>d.TemperatureRun1 + `${texts.temperature.unit}` + ' ' + d. Time + 's');
 
     // Points                 
 
@@ -8148,9 +8147,14 @@ $(document).ready(function(){
     let hoverX = event.pageX-margin;
     let hoverY = event.pageY;
 
-    let cicleData = $(this).attr('title');
+    let circleData = $(this).attr('title').split(' ');
+    let unit = circleData[0];
+    let time = circleData[1];
 
-    console.log(cicleData);
+    console.log(circleData[0], circleData[1]);
+
+    $('#unit').text(unit);
+    $('#time').text(time);
 
     $('#hoverText').show()
                   .css('left', hoverX)
