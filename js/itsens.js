@@ -8069,7 +8069,14 @@ chartGroupPressure.append('g')
 
     // Points
 
-svgPressure.selectAll('circle')
+const press1 = svgPressure.append('g')
+                          .attr('class', 'press1');
+
+const press2 = svgPressure.append('g')
+                          .attr('class', 'press2');;
+
+press1
+          .selectAll('circle')
           .data(sensorData)
           .enter()
           .append('circle')
@@ -8079,6 +8086,16 @@ svgPressure.selectAll('circle')
           .attr('r', `${circle.radius}`)
           .attr('title', (d)=>d.PressureRun1 + `${texts.pressure.unit}` + ' ' + d.Time + 's');
 
+press2
+  .selectAll('circle')
+          .data(sensorData)
+          .enter()
+          .append('circle')
+          .attr('transform', `translate(${margin.left}, ${margin.top})`)
+          .attr('cx', (d)=>xScales(d.Time))
+          .attr('cy', (d)=>yScalesPressure(d.PressureRun2))
+          .attr('r', `${circle.radius}`)
+          .attr('title', (d)=>d.PressureRun2 + `${texts.pressure.unit}` + ' ' + d.Time + 's');
     // Points                      
 
 // Zvuk
@@ -8231,8 +8248,7 @@ $(document).ready(function(){
     let circleData = $(this).attr('title').split(' ');
     let unit = circleData[0];
     let time = circleData[1];
-
-    console.log(circleData[0], circleData[1]);
+    
 
     $('#unit').text(unit);
     $('#time').text(time);

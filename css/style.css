@@ -12,15 +12,8 @@ path {
     fill: none;
 }
 
-g.group0 path,
-g.group0 circle{
-    stroke: red;
-    fill: none;
-}
-
-g.hidden line,
-g.hidden path{
-    display: none;
+circle{
+    stroke: none;
 }
 
 #root{
@@ -108,16 +101,21 @@ text.chartTxt{
     stroke: #396902;
 }
 
-#pressure circle{
-    fill: #00eeff;
-}
-
 .pressure1{
     stroke: #00eeff;
 }
 
-.pressure2{
+.press1 circle{
+    fill: #00eeff;
+}
+
+
+.press2{
     stroke: #001aff;
+}
+
+.press2 circle{
+    fill: #001aff;
 }
 
 #sound circle{
