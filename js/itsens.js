@@ -8243,7 +8243,7 @@ $(document).ready(function(){
     let margin = parseInt($('#root').css('margin-left').replace('px', ''));
 
     let hoverX = event.pageX-margin;
-    let hoverY = event.pageY;
+    let hoverY = event.pageY-380;
 
     let circleData = $(this).attr('title').split(' ');
     let unit = circleData[0];
