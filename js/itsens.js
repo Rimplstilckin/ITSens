@@ -6959,6 +6959,105 @@ svgTemp.selectAll('circle')
 
     // Points                 
 
+
+// ************************
+
+const yScalesCombined = d3.scaleLinear()
+                          .domain([99, 104])
+                          .range([height, 0]);
+
+const svgCombined = d3.select('#root')
+                      .append('svg')
+                      .attr('height', `${svgHeight}`)
+                      .attr('width', `${svgWidth}`)
+                      .attr('id', 'pressure');;
+                    
+const drawLineCombined = d3.line()
+                          .x((d)=>{return xScales(d.Time)})
+                          .y((d)=>{return yScalesCombined(d.PressureRun1)});
+
+const drawLineCombined2 = d3.line()
+                          .x((d)=>{return xScales(d.Time)})
+                          .y((d)=>{return yScalesCombined(d.PressureRun2)});
+
+svgCombined.append('text')
+          .attr('class', `${texts.pressure.class}`)
+          .attr('x', `${texts.x}`)
+          .attr('y', `${texts.y}`)
+          .text(`${texts.pressure.text}`);
+
+      // units
+
+svgCombined.append('text')
+          .attr('x', `${texts.unitPosition.x}`)
+          .attr('y', `${texts.unitPosition.y}`)
+          .text(`${texts.pressure.unit}`);
+
+svgCombined.append('text')
+          .attr('x', `${texts.timePosition.x}`)
+          .attr('y', `${texts.timePosition.y}`)
+          .text(`${texts.time.unit}`);          
+
+      // units          
+                    
+const chartGroupCombined = svgCombined.append('g')
+                                      .attr('transform', `translate(${margin.left}, ${margin.top})`)
+                                      .attr('class', 'charts pressureChart');
+                    
+chartGroupCombined.append('path')
+                  .attr('class', 'pressure1')
+                  .attr('d', drawLineCombined(sensorData));
+
+chartGroupCombined.append('path')
+                  .attr('class', 'pressure2')
+                  .attr('d', drawLineCombined2(sensorData));                  
+                                
+const yAxisCombined = d3.axisLeft(yScalesCombined);
+                    
+chartGroupCombined.append('g')
+                  .attr('class', 'x axis')
+                  .attr('transform', `translate(0, ${height})`)
+                  .call(xAxis);
+
+chartGroupCombined.append('g')
+                  .attr('class', 'y axis')
+                  .call(yAxisCombined);
+
+    // Points
+
+const combined1 = svgCombined.append('g')
+                          .attr('class', 'combined1');
+
+const combined2 = svgCombined.append('g')
+                          .attr('class', 'combined2');;
+
+combined1
+          .selectAll('circle')
+          .data(sensorData)
+          .enter()
+          .append('circle')
+          .attr('transform', `translate(${margin.left}, ${margin.top})`)
+          .attr('class', 'pressure1')
+          .attr('cx', (d)=>xScales(d.Time))
+          .attr('cy', (d)=>yScalesCombined(d.PressureRun1))
+          .attr('r', `${circle.radius}`)
+          .attr('title', (d)=>d.PressureRun1 + `${texts.pressure.unit}` + ' ' + d.Time + 's');
+
+combined2
+  .selectAll('circle')
+          .data(sensorData)
+          .enter()
+          .append('circle')
+          .attr('transform', `translate(${margin.left}, ${margin.top})`)
+          .attr('class', 'combined2')
+          .attr('cx', (d)=>xScales(d.Time))
+          .attr('cy', (d)=>yScalesCombined(d.PressureRun2))
+          .attr('r', `${circle.radius}`)
+          .attr('title', (d)=>d.PressureRun2 + `${texts.pressure.unit}` + ' ' + d.Time + 's');
+    // Points  
+
+// ************************    
+
               // Text uz kursor
 
 $(document).ready(function(){
