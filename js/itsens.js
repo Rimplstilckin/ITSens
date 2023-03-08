@@ -6646,6 +6646,7 @@ svgHumidity.selectAll('circle')
           .enter()
           .append('circle')
           .attr('transform', `translate(${margin.left}, ${margin.top})`)
+          .attr('class', 'humidity')
           .attr('cx', (d)=>xScales(d.Time))
           .attr('cy', (d)=>yScalesHumidity(d.HumidityRun1))
           .attr('r', `${circle.radius}`)
@@ -6715,6 +6716,7 @@ svgLight.selectAll('circle')
         .enter()
         .append('circle')
         .attr('transform', `translate(${margin.left}, ${margin.top})`)
+        .attr('class', 'light')
         .attr('cx', (d)=>xScales(d.Time))
         .attr('cy', (d)=>yScalesLight(d.LightRun1))
         .attr('r', `${circle.radius}`)
@@ -6799,6 +6801,7 @@ press1
           .enter()
           .append('circle')
           .attr('transform', `translate(${margin.left}, ${margin.top})`)
+          .attr('class', 'pressure1')
           .attr('cx', (d)=>xScales(d.Time))
           .attr('cy', (d)=>yScalesPressure(d.PressureRun1))
           .attr('r', `${circle.radius}`)
@@ -6810,6 +6813,7 @@ press2
           .enter()
           .append('circle')
           .attr('transform', `translate(${margin.left}, ${margin.top})`)
+          .attr('class', 'press2')
           .attr('cx', (d)=>xScales(d.Time))
           .attr('cy', (d)=>yScalesPressure(d.PressureRun2))
           .attr('r', `${circle.radius}`)
@@ -6878,6 +6882,7 @@ svgSound.selectAll('circle')
         .enter()
         .append('circle')
         .attr('transform', `translate(${margin.left}, ${margin.top})`)
+        .attr('class', 'sound')
         .attr('cx', (d)=>xScales(d.Time))
         .attr('cy', (d)=>yScalesSound(d.SoundRun1))
         .attr('r', `${circle.radius}`)
@@ -6946,6 +6951,7 @@ svgTemp.selectAll('circle')
         .enter()
         .append('circle')
         .attr('transform', `translate(${margin.left}, ${margin.top})`)
+        .attr('class', 'temperature')
         .attr('cx', (d)=>xScales(d.Time))
         .attr('cy', (d)=>yScalesTemp(d.TemperatureRun1))
         .attr('r', `${circle.radius}`)
@@ -6966,9 +6972,14 @@ $(document).ready(function(){
     let circleData = $(this).attr('title').split(' ');
     let unit = circleData[0];
     let time = circleData[1];
+
+    let circleClass = $(this).attr('class');
+
+    console.log(circleClass);
     
 
     $('#unit').text(unit);
+    $('#unit').attr("class", circleClass);
     $('#time').text(time);
 
     $('#hoverText').show()

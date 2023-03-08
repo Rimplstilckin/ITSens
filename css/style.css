@@ -115,6 +115,7 @@ text.chartTxt{
 
 .humidity{
     stroke: #f00;
+    color: #f00;
 }
 
 #light circle{
@@ -123,10 +124,12 @@ text.chartTxt{
 
 .light{
     stroke: #396902;
+    color: #396902;
 }
 
 .pressure1{
     stroke: #00eeff;
+    color: #00eeff;
 }
 
 .press1 circle{
@@ -136,6 +139,7 @@ text.chartTxt{
 
 .press2{
     stroke: #001aff;
+    color: #001aff;
 }
 
 .press2 circle{
@@ -148,6 +152,7 @@ text.chartTxt{
 
 .sound{
     stroke: #ff8800;
+    color: #ff8800;
 }
 
 #temperature circle{
@@ -156,4 +161,5 @@ text.chartTxt{
 
 .temperature{
     stroke: #f200ff;
+    color: #f200ff;
 }
