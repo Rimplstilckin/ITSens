@@ -6970,9 +6970,9 @@ const svgCombined = d3.select('#root')
                       .append('svg')
                       .attr('height', `${svgHeight}`)
                       .attr('width', `${svgWidth}`)
-                      .attr('id', 'pressure');;
+                      .attr('id', 'combined');;
                     
-const drawLineCombined = d3.line()
+const drawLineCombined1 = d3.line()
                           .x((d)=>{return xScales(d.Time)})
                           .y((d)=>{return yScalesCombined(d.PressureRun1)});
 
@@ -6991,7 +6991,7 @@ svgCombined.append('text')
 svgCombined.append('text')
           .attr('x', `${texts.unitPosition.x}`)
           .attr('y', `${texts.unitPosition.y}`)
-          .text(`${texts.pressure.unit}`);
+          .text(`${texts.pressure.unit}/°C/%RH`);
 
 svgCombined.append('text')
           .attr('x', `${texts.timePosition.x}`)
@@ -7006,7 +7006,7 @@ const chartGroupCombined = svgCombined.append('g')
                     
 chartGroupCombined.append('path')
                   .attr('class', 'pressure1')
-                  .attr('d', drawLineCombined(sensorData));
+                  .attr('d', drawLineCombined1(sensorData));
 
 chartGroupCombined.append('path')
                   .attr('class', 'pressure2')
@@ -7026,10 +7026,10 @@ chartGroupCombined.append('g')
     // Points
 
 const combined1 = svgCombined.append('g')
-                          .attr('class', 'combined1');
+                          .attr('class', 'press1');
 
 const combined2 = svgCombined.append('g')
-                          .attr('class', 'combined2');;
+                          .attr('class', 'press2');;
 
 combined1
           .selectAll('circle')
