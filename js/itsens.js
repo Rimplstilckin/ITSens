@@ -6963,7 +6963,7 @@ svgTemp.selectAll('circle')
 // ************************
 
 const yScalesCombined = d3.scaleLinear()
-                          .domain([99, 104])
+                          .domain([0, 104])
                           .range([height, 0]);
 
 const svgCombined = d3.select('#root')
@@ -6980,18 +6980,38 @@ const drawLineCombined2 = d3.line()
                           .x((d)=>{return xScales(d.Time)})
                           .y((d)=>{return yScalesCombined(d.PressureRun2)});
 
+const drawLineCombined3 = d3.line()
+                          .x((d)=>{return xScales(d.Time)})
+                          .y((d)=>{return yScalesCombined(d.HumidityRun1)});
+
+const drawLineCombined4 = d3.line()
+                          .x((d)=>{return xScales(d.Time)})
+                          .y((d)=>{return yScalesCombined(d.TemperatureRun1)});
+
 svgCombined.append('text')
-          .attr('class', `${texts.pressure.class}`)
-          .attr('x', `${texts.x}`)
+          .attr('class', 'combinedText chartTxt combinedPressure')
+          .attr('x', 186)
           .attr('y', `${texts.y}`)
-          .text(`${texts.pressure.text}`);
+          .text('Pritisak / ');
+
+svgCombined.append('text')
+          .attr('class', 'combinedText chartTxt combinedHumidity')
+          .attr('x', 350)
+          .attr('y', `${texts.y}`)
+          .text('Vlažnost / ');
+
+svgCombined.append('text')
+          .attr('class', 'combinedText chartTxt combinedTemperature')
+          .attr('x', 613)
+          .attr('y', `${texts.y}`)
+          .text('Temperatura vazduha');
 
       // units
 
 svgCombined.append('text')
           .attr('x', `${texts.unitPosition.x}`)
           .attr('y', `${texts.unitPosition.y}`)
-          .text(`${texts.pressure.unit}/°C/%RH`);
+          .text(`${texts.pressure.unit} / ${texts.humidity.unit} / ${texts.temperature.unit}`);
 
 svgCombined.append('text')
           .attr('x', `${texts.timePosition.x}`)
@@ -7002,7 +7022,7 @@ svgCombined.append('text')
                     
 const chartGroupCombined = svgCombined.append('g')
                                       .attr('transform', `translate(${margin.left}, ${margin.top})`)
-                                      .attr('class', 'charts pressureChart');
+                                      .attr('class', 'charts combinedChart');
                     
 chartGroupCombined.append('path')
                   .attr('class', 'pressure1')
@@ -7010,7 +7030,15 @@ chartGroupCombined.append('path')
 
 chartGroupCombined.append('path')
                   .attr('class', 'pressure2')
-                  .attr('d', drawLineCombined2(sensorData));                  
+                  .attr('d', drawLineCombined2(sensorData));
+
+chartGroupCombined.append('path')
+                  .attr('class', 'humidity')
+                  .attr('d', drawLineCombined3(sensorData));
+
+chartGroupCombined.append('path')
+                  .attr('class', 'temperature')
+                  .attr('d', drawLineCombined4(sensorData));                  
                                 
 const yAxisCombined = d3.axisLeft(yScalesCombined);
                     
@@ -7026,13 +7054,18 @@ chartGroupCombined.append('g')
     // Points
 
 const combined1 = svgCombined.append('g')
-                          .attr('class', 'press1');
+                            .attr('class', 'press1');
 
 const combined2 = svgCombined.append('g')
-                          .attr('class', 'press2');;
+                            .attr('class', 'press2');
 
-combined1
-          .selectAll('circle')
+const combined3 = svgCombined.append('g')
+                            .attr('class', 'humidity');
+
+const combined4 = svgCombined.append('g')
+                            .attr('class', 'press4');
+
+combined1.selectAll('circle')
           .data(sensorData)
           .enter()
           .append('circle')
@@ -7043,17 +7076,39 @@ combined1
           .attr('r', `${circle.radius}`)
           .attr('title', (d)=>d.PressureRun1 + `${texts.pressure.unit}` + ' ' + d.Time + 's');
 
-combined2
-  .selectAll('circle')
+combined2.selectAll('circle')
           .data(sensorData)
           .enter()
           .append('circle')
           .attr('transform', `translate(${margin.left}, ${margin.top})`)
-          .attr('class', 'combined2')
+          .attr('class', 'press2')
           .attr('cx', (d)=>xScales(d.Time))
           .attr('cy', (d)=>yScalesCombined(d.PressureRun2))
           .attr('r', `${circle.radius}`)
           .attr('title', (d)=>d.PressureRun2 + `${texts.pressure.unit}` + ' ' + d.Time + 's');
+
+combined3.selectAll('circle')
+          .data(sensorData)
+          .enter()
+          .append('circle')
+          .attr('transform', `translate(${margin.left}, ${margin.top})`)
+          .attr('class', 'humidity')
+          .attr('cx', (d)=>xScales(d.Time))
+          .attr('cy', (d)=>yScalesCombined(d.HumidityRun1))
+          .attr('r', `${circle.radius}`)
+          .attr('title', (d)=>d.HumidityRun1 + `${texts.humidity.unit}` +' ' + d.Time + 's');
+         
+combined4.selectAll('circle')
+          .data(sensorData)
+          .enter()
+          .append('circle')
+          .attr('transform', `translate(${margin.left}, ${margin.top})`)
+          .attr('class', 'temperature')
+          .attr('cx', (d)=>xScales(d.Time))
+          .attr('cy', (d)=>yScalesCombined(d.TemperatureRun1))
+          .attr('r', `${circle.radius}`)
+          .attr('title', (d)=>d.TemperatureRun1 + `${texts.temperature.unit}` + ' ' + d. Time + 's');         
+
     // Points  
 
 // ************************    

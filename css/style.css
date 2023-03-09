@@ -109,7 +109,9 @@ text.chartTxt{
 
 /* Graphs color */
 
-#humidity circle{
+#humidity circle,
+.humidity circle,
+.combinedHumidity{
     fill:#f00;
 }
 
@@ -142,7 +144,8 @@ text.chartTxt{
     color: #001aff;
 }
 
-.press2 circle{
+.press2 circle,
+.combinedPressure{
     fill: #001aff;
 }
 
@@ -155,7 +158,9 @@ text.chartTxt{
     color: #ff8800;
 }
 
-#temperature circle{
+#temperature circle,
+circle.temperature,
+.combinedTemperature{
     fill: #f200ff;
 }
 
